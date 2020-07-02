@@ -1,35 +1,35 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import ToDoList, Item
-from .forms import CreateNewList
+from .forms import CreateNewList, UserForm
 
-def index(response,id):
-     ls=ToDoList.objects.get(id=id)
-     items=ls.item_set.all()
+def index(request,id):
+          ls=ToDoList.objects.get(id=id)
+          items=ls.item_set.all()
      #ls=ToDoList.objects.all()
-     if response.method=="POST":
-          print(response.POST)
-          if response.POST.get("save"):
-               for item in ls.item_set.all():
-                    if response.POST.get("c"+str(item.id)) =="clicked":
-                         item.complete=True
-                         
-                    else:
-                         item.complete=False
-                    item.save()     
-                         
-                    
 
-          elif response.POST.get("newItem"):
-               txt=response.POST.get("new")
-               if len(txt) >2:
-                    ls.item_set.create(text=txt, complete=False)
+     
+          form=UserForm(request.POST,request.FILES,instance=ls)
+          if request.method=="POST":
+               #form=UserForm(request.POST,request.FILES,instance=ls)
+               
+               
+               if form.is_valid():
+                    form.save()
+                    return redirect('success')
                else:
-                    print("invalid")
+                    form=UserForm(request.POST,request.FILES,instance=ls)
+                    
+               
+           
 
-     return render(response, "main/list.html",{"ls":ls, "items":items})
+         
 
-             
+          return render(request, "main/list.html",{"ls":ls, "items":items, "form":form})
+
+def success(request):
+               return HttpResponse('successfull uploaded')
+        
 def create(response):
             if response.method=="POST":
                  print("goober")
