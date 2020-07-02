@@ -3,17 +3,43 @@
 {%block content%}
  <div>
  <h1> {{ls.name}} </h1>
- <img src={{ls.image.url}}>
+ <form method="post" action="#">
+    {% csrf_token  %}
+					
+
+	<h1>{{ls.id}}</h1>
+
+    <ul>
+    	{%for item in ls.item_set.all%}
+    	
+    	<h1> {{item.name}} Status {{item.complete}}</h1>
+    	{% endfor %}
+     {%if ls.image%}
+     <image src="{{ls.image.url}}">
+     	{%endif%}
+     	
+	{% for item in ls.item_set.all %}
+	 <div class = "input-group mb-3">
+	        <div class = "input-group-prepend">
+    	    <div class="input-group-text">
+	  
+	  {%if item.complete == True %}
+	      <input type="checkbox" value="clicked" name="c{{item.id}}" checked >
+	   {% else %}
+	    <input type="checkbox" value="clicked" name="c{{item.id}}" >
+	   {% endif %}
+	   <input type = "text", value="{{item.text}}" class="form-control">
+	   {%endfor%}
+
+	</div>
+</div>
+
  
  
 
 	
 			
-		<form method = "post" enctype="multipart/form-data"> 
-        {% csrf_token %} 
-        {{ form.as_p }} 
-        <button type="submit">Upload</button> 
-    </form> 
+		
 
  </div>
 
@@ -33,4 +59,5 @@
 	</div>
 	<button type="submit" name="save" value="save" class="btn btn-success"> Save</button>
 	</form>
-{%endblock%}
+	<a href="../change/{{ls.id}}"> Change </a>
+	{%endblock%}
