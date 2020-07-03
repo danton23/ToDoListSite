@@ -4,6 +4,13 @@ from .models import ToDoList, Item
 from .forms import CreateNewList, UserForm
 
 def index(request,id):
+          allls=ToDoList.objects.all()
+          largest=ToDoList.objects.latest('id').id
+          print(largest)
+          latest=ToDoList.objects.get(id=largest)
+          print(latest.id)
+          print(latest.name)
+          
           ls=ToDoList.objects.get(id=id)
           items=ls.item_set.all()
      #ls=ToDoList.objects.all()
@@ -19,12 +26,12 @@ def index(request,id):
                           form.save()
                           
                           
-                          return render(request, "main/list.html",{"ls":ls, "items":items, "form":form})
+                          return render(request, "main/list.html",{"ls":ls, "items":items, "form":form, "allls":allls,"latest":latest})
 
                                     
                elif request.POST.get("save"):
                          for item in ls.item_set.all():
-                              if request.POST.get("c"+str(item.id)) =="clicked":
+                              if request.POST.get("c"+str(item.id) =="clicked"):
                                    item.complete=True
                                    
                               else:
@@ -47,7 +54,7 @@ def index(request,id):
 
          
 
-          return render(request, "main/list.html",{"ls":ls, "items":items, "id":id})
+          return render(request, "main/list.html",{"ls":ls, "items":items, "id":id, "allls":allls,"latest":latest})
 
 def change(request,id):
           ls=ToDoList.objects.get(id=id)
