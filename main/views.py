@@ -86,7 +86,8 @@ def change(request,id):
                         ls.save()
                     else:    
                          form.save()
-                    return redirect('success')
+                    # return redirect('success')
+                    return redirect('index',id)
                else:
                     form=UserForm(request.POST,request.FILES,instance=ls)
                     
