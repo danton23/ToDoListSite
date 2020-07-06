@@ -1,0 +1,58 @@
+{%extends "main/base.html" %}
+{%block title%} Test {% endblock%}
+{%block content%}
+<body>
+
+<div class = "input-group mb-3" id="1">
+<div class = "input-group-prepend">
+ <div class="input-group-text">
+ 
+	   
+	   <input type = "text", value="3" >
+	   <input type = "text", value="3" >
+	   <input type = "text", value="3" >
+</div>
+</div>
+</div>
+<div class = "input-group mb-3">
+<div class = "input-group-prepend">
+ <div class="input-group-text">
+ 
+	   
+	   <input type = "text", value="3" >
+	   <input type = "text", value="3" >
+	   <input type = "text", value="3" >
+</div>
+</div>
+</div>
+{{nums|json_script:"nums"}}
+<script>
+
+	
+	const nums=JSON.parse(document.getElementById('nums').textContent)
+	
+
+	</script>
+	<script>
+
+	
+	const nums=JSON.parse(document.getElementById('nums').textContent)
+	var para = document.createElement("text");
+    var node = document.createTextNode(nums[0]);
+    para.appendChild(node);
+
+    var element = document.getElementById("1");
+    element.appendChild(para);
+
+
+	
+
+	</script>
+<div>
+<h1>TEST TWO </h1>
+{% for i in range%}
+  <h1> NUM {{nums}} NUM</h1>
+{% endfor %}
+</div>
+</body>
+{%endblock%}

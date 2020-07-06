@@ -1,7 +1,12 @@
 {%extends "main/base.html" %}
 {%block title%} view list {% endblock%}
 {%block content%}
- <div>
+ 
+<style type="text/css">
+	.wide{
+		margin: 0 70px;
+	}
+</style>
  <h1> {{ls.name}} </h1>
  <form method="post" action="#">
     {% csrf_token  %}
@@ -17,56 +22,68 @@
     	{% endfor %}
      {%if ls.image%}
      <image src="{{ls.image.url}}" width =400px height= 400px>
-     	{%endif%}
+     	{%else%}
+     	<image src="media/images/default.png" width=400px height=400px>
      	
-	{% for item in ls.item_set.all %}
+
+     	{%endif%}
+
+     
+    {% for item in ls.item_set.all %}
+     
 	 <div class = "input-group mb-3">
 	        <div class = "input-group-prepend">
-    	    <div class="input-group-text">
+	        	<div class="input-group-text"> 
 	  
 	  {%if item.complete == True %}
 	      <input type="checkbox" value="clicked" name="c{{item.id}}" checked >
 	   {% else %}
-	    <input type="checkbox" value="clicked" name="c{{item.id}}" >
+	    <input type="checkbox" value="clicked" name="c{{item.id}}" > 
 	   {% endif %}
-	   <input type = "text", value="{{item.text}}" class="form-control">
-	   {%endfor%}
-
 	</div>
-</div>
+	</div>
+	 <input type="text", value="{{item.text}}",class="form-control">
+	   
+	  </div>
 
- 
- 
 
+	  {%endfor%}
 	
-			
-		
+	
 
- </div>
-
-
- 
-
+      
 	
 	
 	
 	<div class="input-group mb-3">
 	<div class ="input-group-prepend">
+		
 	
 	<button type="submit" name="newItem" value="newItem" class ="btn btn-success"> Add Item</button>
-
-	</div>
+    </div>
+	
 	<input type="text", name="new">
-	</div>
-	<button type="submit" name="save" value="save" class="btn btn-success"> Save</button>
+</div>
+
+	
+	<button type="submit" name="save" value="save" class="btn btn-success"> Save </button>
+
+
+
+
+
 	</form>
-	<h1>{{largest.id}} {{largest.name}}</h1>
-	<a href="../change/{{ls.id}}"> Change </a>
+	<div class="input-group mb-3">
+	<div class ="input-group-prepend">
+	<a href="../change/{{ls.id}}", class="wide"> Change      </a>
+	
+     
 	{% for list in allls %}
 	  {% if list.id == ls.id%}
        {%if list.id < latest.id%}
 	  
-	  <a href="/{{ls.id | add:"1"}}">Next </a>
+	  <a href="/{{ls.id | add:"1"}}", class="wide">Next </a>
+	
 	  {%endif%}
 	  {%endif%}
 	  
@@ -75,11 +92,15 @@
 	  {% if list.id == ls.id%}
        {%if list.id > 1 %}
 	  
-	  <a href="/{{ls.id | add:"-1"}}"> Previous </a>
+	  <a href="/{{ls.id | add:"-1"}}", class="wide"> Previous </a>
+
 	  {%endif%}
 	  {%endif%}
 	  
     {%endfor%}
-	
+	</div>
+</div>
+	</div>
+
 	
 	{%endblock%}

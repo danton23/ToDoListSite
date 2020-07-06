@@ -11,6 +11,6 @@ urlpatterns = [
     path("view/", views.view, name="view"),
     path("success/", views.success, name = 'success'),
     path("change/<int:id>", views.change, name='change'),
-    
+    path("test/", views.test, name="test"),
     
 ]

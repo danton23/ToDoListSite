@@ -28,15 +28,17 @@ def index(request,id):
                           
                           return render(request, "main/list.html",{"ls":ls, "items":items, "form":form, "allls":allls,"latest":latest})
 
-                                    
-               elif request.POST.get("save"):
+               if request.method=="POST":
+                    print(request.POST)
+                    if request.POST.get("save"):
                          for item in ls.item_set.all():
-                              if request.POST.get("c"+str(item.id) =="clicked"):
+                              if request.POST.get("c"+str(item.id)) =="clicked":
                                    item.complete=True
                                    
                               else:
                                    item.complete=False
-                              item.save()     
+                              item.save()                        
+               
                                    
                               
 
@@ -55,6 +57,11 @@ def index(request,id):
          
 
           return render(request, "main/list.html",{"ls":ls, "items":items, "id":id, "allls":allls,"latest":latest})
+
+def test(request):
+     nums=[1,2,3]
+    
+     return render(request, "main/test.html",{"nums":nums,"range":range(10)})
 
 def change(request,id):
           ls=ToDoList.objects.get(id=id)
