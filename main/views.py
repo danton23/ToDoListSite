@@ -66,6 +66,7 @@ def test(request):
 def change(request,id):
           ls=ToDoList.objects.get(id=id)
           items=ls.item_set.all()
+          oldname=ls.name
      #ls=ToDoList.objects.all()
 
      
@@ -75,7 +76,16 @@ def change(request,id):
                
                
                if form.is_valid():
-                    form.save()
+               
+                    if form.cleaned_data.get('name') == None:
+                        print("entered")
+                         
+                        
+                        form.save()
+                        ls.name=oldname #if no name entered will revert to old one
+                        ls.save()
+                    else:    
+                         form.save()
                     return redirect('success')
                else:
                     form=UserForm(request.POST,request.FILES,instance=ls)
