@@ -28,16 +28,15 @@ def index(request,id):
                           
                           return render(request, "main/list.html",{"ls":ls, "items":items, "form":form, "allls":allls,"latest":latest})
 
-               if request.method=="POST":
-                    print(request.POST)
-                    if request.POST.get("save"):
-                         for item in ls.item_set.all():
-                              if request.POST.get("c"+str(item.id)) =="clicked":
-                                   item.complete=True
-                                   
-                              else:
-                                   item.complete=False
-                              item.save()                        
+               
+               elif request.POST.get("save"):
+                                 for item in ls.item_set.all():
+                                      if request.POST.get("c"+str(item.id)) =="clicked":
+                                           item.complete=True
+                                           
+                                      else:
+                                           item.complete=False
+                                      item.save()                        
                
                                    
                               
@@ -117,7 +116,7 @@ def create(response):
 def view(response):
      #try:
                ident=ToDoList.objects.latest('id').id
-                  
+               allls=ToDoList.objects.all()
                ls=ToDoList.objects.get(id=ident)
                items=ls.item_set.all()
                #ls=ToDoList.objects.all()
@@ -140,7 +139,7 @@ def view(response):
                               ls.item_set.create(text=txt, complete=False)
                          else:
                               print("invalid")               
-               return render(response, "main/list.html",{"ls":ls, "items":items})
+               return render(response, "main/list.html",{"ls":ls, "items":items, "allls":allls})
      #except:
         #  print("not worked")
          # create(response)

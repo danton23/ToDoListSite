@@ -6,31 +6,52 @@
 	.wide{
 		margin: 0 70px;
 	}
+	#head{
+		padding-bottom: 40px;
+	}
+	.main_img{
+		display:block;
+		margin-left: auto;
+        margin-right: auto;
+        padding-bottom: 60px;
+        
+		
+	}
+	.one_row{
+		display:inline-block;
+		 
+	}
+	.all_text{
+		margin-left: auto;
+        margin-right: auto;
+
+	}
 </style>
- <h1> {{ls.name}} </h1>
+
+{%if ls.name%}
+ <h1 class="text-center" id="head"> {{ls.name}} </h1>
+ {%endif%}
+
  <form method="post" action="#">
     {% csrf_token  %}
 					
 
-	<h1>{{ls.id}}</h1>
+	
 
 
     <ul>
-    	{%for item in ls.item_set.all%}
     	
-    	<h1> {{item.name}} Status {{item.complete}}</h1>
-    	{% endfor %}
      {%if ls.image%}
-     <image src="{{ls.image.url}}" width =400px height= 400px>
+     <image src="{{ls.image.url}}" width =400px height= 400px class="main_img"></image>
      	{%else%}
-     	<image src="media/images/default.png" width=400px height=400px>
+     	<image src="media/images/default.png" width=400px height=400px class="main_img"></image>
      	
 
      	{%endif%}
-
+    <div class="all_text">
      
     {% for item in ls.item_set.all %}
-     
+     <div class = "one_row">
 	 <div class = "input-group mb-3">
 	        <div class = "input-group-prepend">
 	        	<div class="input-group-text"> 
@@ -42,9 +63,12 @@
 	   {% endif %}
 	</div>
 	</div>
+
 	 <input type="text", value="{{item.text}}",class="form-control">
 	   
 	  </div>
+	</div>
+   
 
 
 	  {%endfor%}
@@ -73,6 +97,8 @@
 
 
 	</form>
+</ul>
+
 	<div class="input-group mb-3">
 	<div class ="input-group-prepend">
 	<a href="../change/{{ls.id}}", class="wide"> Change      </a>
@@ -101,6 +127,9 @@
 	</div>
 </div>
 	</div>
+
+</div>
+</form>
 
 	
 	{%endblock%}
