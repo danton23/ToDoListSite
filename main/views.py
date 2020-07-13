@@ -30,13 +30,43 @@ def index(request,id):
 
                
                elif request.POST.get("save"):
+                                 print("save seleced")
                                  for item in ls.item_set.all():
-                                      if request.POST.get("c"+str(item.id)) =="clicked":
-                                           item.complete=True
-                                           
+                                      if request.POST.get("d"+str(item.id))=="delete":
+                                          print(len(ls.item_set.all()))
+                                          no_items=len(ls.item_set.all())
+                                          """if no_items==1:
+                                              print("LAST ITEM")
+                                              items.filter(id=item.id).delete()
+                                              for item in items:
+                                                  item.save()
+                                                  print("saved")
+                                              ls.delete()
+                                              print("ls update")
+                                              pass"""
+                                          print("Entered Here")
+                                          print(str(item.text)+"delete selected")
+                                          items=ls.item_set.all()
+                                          items.filter(id=item.id).delete()
+                                          for item in items:
+                                              item.save()
+                                          """if no_items==1:
+                                              ls.item_set.all().pop[0]"""
+                                          print(items)
+                                          items=ls.item_set.all()
+                                          
+                                          print(items)
+                                          
+                                          pass
+                                          
                                       else:
-                                           item.complete=False
-                                      item.save()                        
+                                          if request.POST.get("c"+str(item.id)) =="clicked":
+                                              item.complete=True
+                                              item.save()
+                                           
+                                          else:
+                                             item.complete=False
+                                             item.save()                        
                
                                    
                               
@@ -51,7 +81,7 @@ def index(request,id):
                
                           
                
-           
+                   
 
          
 

@@ -9,7 +9,7 @@ class ToDoList(models.Model):
         return self.name
 
 class Item(models.Model):
-    todolist=models.ForeignKey(ToDoList, on_delete=models.CASCADE)
+    todolist=models.ForeignKey(ToDoList, on_delete=models.CASCADE, null=True)
     text=models.CharField(max_length=300)
     complete=models.BooleanField()
 
